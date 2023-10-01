@@ -1,0 +1,72 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appId": {
+            "value": "2cdaac95-b3b5-4d3d-a06a-7629a3c88a9c"
+        },
+        "appPassword": {
+            "value": "leX8Q~igrJ3bJlp9VlvF.w7blxpnsgW91tyIVal1"
+        },
+        "datasourceSASToken": {
+            "value": "sp=r&st=2023-10-01T07:48:13Z&se=2023-10-01T15:48:13Z&spr=https&sv=2022-11-02&sr=c&sig=n8Y2eQGgkPEvu%2F7AG%2F0daphWHoIhHPIAl0DDKqatXNo%3D"
+        },
+        "resourceGroupSearch": {
+            "value": "dev-rg-ai-01"  
+        },
+        "azureSearchName": {
+            "value": "dev-search-ai-01"
+        },
+        "azureSearchAPIVersion": {
+            "value": "2023-07-01-Preview"
+        },
+        "azureOpenAIName": {
+            "value": "dev-aoai-ai-01"  
+        },
+        "azureOpenAIAPIKey": {
+            "value": "6c9c4a46f7944f86a3b92a48ea59c170"
+        },
+        "azureOpenAIModelName": {
+            "value": "gpt-35-turbo-16k"
+        },
+        "azureOpenAIAPIVersion": {
+            "value": "2023-05-15"
+        },
+        "bingSearchUrl": {
+            "value": "https://api.bing.microsoft.com/v7.0/search"
+        },
+        "bingSearchName": {
+            "value": "dev-bing-ai-01"
+        },
+        "SQLServerName": {
+            "value": "dev-sql-ai-01"
+        },
+        "SQLServerDatabase": {
+            "value": "dev-sql-db-ai-01"
+        },
+        "SQLServerPassword": {
+            "value": "devSQLadmin!"
+        },
+        "cosmosDBAccountName": {
+            "value": "dev-cosmos-db-ai-01"
+        },
+        "cosmosDBContainerName": {
+            "value": "dev-cosmos-ai-db-container-01"
+        },
+        "botId": {
+            "value": "dev-bot-ai-01"  
+        },
+        "botSKU": {
+            "value": "F0"
+        },
+        "appServicePlanName": {
+            "value": "dev-app-plan-ai-01"  
+        },
+        "appServicePlanSKU": {
+            "value": "S3"
+        },
+        "location": {
+            "value": "eastus"  
+        }
+    }
+}

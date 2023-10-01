@@ -10,6 +10,7 @@ sqlalchemy<2.0.0
 pyodbc
 tabulate
 azure-cosmos
-botbuilder-integration-aiohttp>=4.14.4
+typing-extensions>=4.6.0
+botbuilder-integration-aiohttp
 streamlit
 python-dotenv

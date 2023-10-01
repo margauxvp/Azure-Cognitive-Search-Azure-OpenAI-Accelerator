@@ -1,69 +1,66 @@
 @description('Required. Active Directory App ID.')
-param appId string
+param appId string = '2cdaac95-b3b5-4d3d-a06a-7629a3c88a9c'
 
 @description('Required. Active Directory App Secret Value.')
 @secure()
-param appPassword string
+param appPassword string = 'leX8Q~igrJ3bJlp9VlvF.w7blxpnsgW91tyIVal1'
 
 @description('Required. The SAS token for the Azure Storage Account hosting your data')
 @secure()
-param datasourceSASToken string 
-
-@description('Optional. The name of the resource group where the resources (Azure Search etc.) where deployed previously. Defaults to current resource group.')
-param resourceGroupSearch string = resourceGroup().name
-
-@description('Required. The name of the Azure Search service deployed previously.')
-param azureSearchName string 
+param datasourceSASToken string = 'sp=r&st=2023-10-01T07:48:13Z&se=2023-10-01T15:48:13Z&spr=https&sv=2022-11-02&sr=c&sig=n8Y2eQGgkPEvu%2F7AG%2F0daphWHoIhHPIAl0DDKqatXNo%3D'
 
 @description('Optional. The API version for the Azure Search service.')
-param azureSearchAPIVersion string = '2021-04-30-Preview'
+param azureSearchAPIVersion string = '2023-07-01-Preview'
 
-@description('Required. The name of the Azure OpenAI resource deployed previously.')
-param azureOpenAIName string
+@description('Optional. The API version for the Azure Search service.')
+param azureSearchKey string = 'w1xOCgXeL08HnDCdbKiKtiHakcd4FcZx3GzLkQTsorAzSeBILKNU'
 
 @description('Required. The API key of the Azure OpenAI resource deployed previously.')
-param azureOpenAIAPIKey string 
+param azureOpenAIAPIKey string = '6c9c4a46f7944f86a3b92a48ea59c170'
 
 @description('Optional. The model name for the Azure OpenAI service.')
-param azureOpenAIModelName string = 'gpt-4'
+param azureOpenAIModelName string = 'gpt-35-turbo-16k'
 
 @description('Optional. The API version for the Azure OpenAI service.')
-param azureOpenAIAPIVersion string = '2023-03-15-preview'
+param azureOpenAIAPIVersion string = '2023-07-01-preview'
 
 @description('Optional. The URL for the Bing Search service.')
-param bingSearchUrl string = 'https://api.bing.microsoft.com/v7.0/search'
+param bingSearchUrl string = 'https://api.bing.microsoft.com'
 
-@description('Required. The name of the Bing Search service deployed previously.')
-param bingSearchName string
+@description('Required. The key the Bing Search service deployed previously.')
+param bingSearchKey string = 'b216f8fef16845e4a672f016c9508bc6'
 
 @description('Required. The name of the SQL server deployed previously.')
-param SQLServerName string
+param SQLServerName string = 'dev-sql-ai-01'
 
 @description('Required. The name of the SQL Server database.')
-param SQLServerDatabase string = 'SampleDB'
+param SQLServerDatabase string = 'dev-sql-db-ai-01'
+
+@description('Required. The name of the SQL Server Administrator.')
+param SQLServerUserName string = 'devsqlaaidmin'
 
 @description('Required. The password for the SQL Server.')
 @secure()
-param SQLServerPassword string
+param SQLServerPassword string = 'devSQLadmin!'
 
 @description('Required. The name of the Azure CosmosDB.')
-param cosmosDBAccountName string
+param cosmosDBAccountName string = 'dev-cosmos-db-ai-01'
 
 @description('Required. The name of the Azure CosmosDB container.')
-param cosmosDBContainerName string
+param cosmosDBContainerName string = 'dev-cosmos-ai-db-container-01'
 
 @description('Optional. The globally unique and immutable bot ID. Also used to configure the displayName of the bot, which is mutable.')
-param botId string = 'BotId-${uniqueString(resourceGroup().id)}'
+param botId string = 'dev-bot-ai-01'
 
 @description('Optional, defaults to F0. The pricing tier of the Bot Service Registration. Acceptable values are F0 and S1.')
 @allowed([
   'F0'
   'S1'
 ])
-param botSKU string = 'F0'
+param botSKU string = 'S1'
 
 @description('Optional. The name of the new App Service Plan.')
-param appServicePlanName string = 'AppServicePlan-Backend-${uniqueString(resourceGroup().id)}'
+param appServicePlanName string = 'dev-app-service-plan-ai-01'
 
 @description('Optional, defaults to S3. The SKU of the App Service Plan. Acceptable values are B3, S3 and P2v3.')
 @allowed([
@@ -80,30 +77,6 @@ var publishingUsername = '$${botId}'
 var webAppName = 'webApp-Backend-${botId}'
 var siteHost = '${webAppName}.azurewebsites.net'
 var botEndpoint = 'https://${siteHost}/api/messages'
-
-// Existing Azure Search service.
-resource azureSearch 'Microsoft.Search/searchServices@2021-04-01-preview' existing = {
-  name: azureSearchName
-  scope: resourceGroup(resourceGroupSearch)
-}
-
-// Existing Bing Search resource.
-resource bingSearch 'Microsoft.Bing/accounts@2020-06-10' existing = {
-  name: bingSearchName
-  scope: resourceGroup(resourceGroupSearch)
-}
-
-// Existing SQL Server resource.
-resource sqlServer 'Microsoft.Sql/servers@2022-11-01-preview' existing = {
-  name: SQLServerName
-  scope: resourceGroup(resourceGroupSearch)
-}
-
-// Existing Azure CosmosDB resource.
-resource cosmosDB 'Microsoft.DocumentDB/databaseAccounts@2023-04-15' existing = {
-  name: cosmosDBAccountName
-  scope: resourceGroup(resourceGroupSearch)
-}
 
 // Create a new Linux App Service Plan if no existing App Service Plan name was passed in.
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
@@ -162,11 +135,11 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
         }
         {
           name: 'AZURE_SEARCH_ENDPOINT'
-          value: 'https://${azureSearchName}.search.windows.net'
+          value: 'https://dev-search-ai-01.search.windows.net'
         }
         {
           name: 'AZURE_SEARCH_KEY'
-          value: azureSearch.listAdminKeys().primaryKey
+          value: azureSearchKey
         }
         {
           name: 'AZURE_SEARCH_API_VERSION'
@@ -174,7 +147,7 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
         }
         {
           name: 'AZURE_OPENAI_ENDPOINT'
-          value: 'https://${azureOpenAIName}.openai.azure.com/'
+          value: 'https://dev-aoai-ai-01.openai.azure.com/'
         }
         {
           name: 'AZURE_OPENAI_API_KEY'
@@ -194,11 +167,11 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
         }
         {
           name: 'BING_SUBSCRIPTION_KEY'
-          value: bingSearch.listKeys().key1
+          value: bingSearchKey
         }
         {
           name: 'SQL_SERVER_NAME'
-          value: '${SQLServerName}${environment().suffixes.sqlServerHostname}'
+          value: SQLServerName
         }
         {
           name: 'SQL_SERVER_DATABASE'
@@ -206,7 +179,7 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
         }
         {
           name: 'SQL_SERVER_USERNAME'
-          value: sqlServer.properties.administratorLogin
+          value: SQLServerUserName
         }
         {
           name: 'SQL_SERVER_PASSWORD'
@@ -226,7 +199,7 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
         }
         {
           name: 'AZURE_COMOSDB_CONNECTION_STRING'
-          value: cosmosDB.listConnectionStrings().connectionStrings[0].connectionString
+          value: 'AccountEndpoint=https://dev-cosmos-db-acc-ai-01.documents.azure.com:443/;AccountKey=6ef6RiMULX2OvPKMZH9ps8b9RFSkS7e5Z1y4zdkVQXKTDtwifZlAg9k1CI8EloslxtU1VF1d28hCACDbCg8V6A==;'
         }
         {
           name: 'SCM_DO_BUILD_DURING_DEPLOYMENT'

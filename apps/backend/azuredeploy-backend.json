@@ -16,13 +16,13 @@
       }
     },
     "appPassword": {
-      "type": "securestring",
+      "type": "string",
       "metadata": {
         "description": "Required. Active Directory App Secret Value."
       }
     },
     "datasourceSASToken": {
-      "type": "securestring",
+      "type": "string",
       "metadata": {
         "description": "Required. The SAS token for the Azure Storage Account hosting your data"
       }
@@ -100,7 +100,7 @@
       }
     },
     "SQLServerPassword": {
-      "type": "securestring",
+      "type": "string",
       "metadata": {
         "description": "Required. The password for the SQL Server."
       }

@@ -2,11 +2,56 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "SQLAdministratorLogin": {
-            "value": "" // TODO: Fill in parameter value
-        },
-        "SQLAdministratorLoginPassword": {
-            "value": "" // TODO: Fill in parameter value
-        }
+      "azureSearchName": {
+        "value": "dev-search-ai-01"
+      },
+      "azureSearchSKU": {
+        "value": "standard"
+      },
+      "azureSearchReplicaCount": {
+        "value": 1
+      },
+      "azureSearchPartitionCount": {
+        "value": 1
+      },
+      "azureSearchHostingMode": {
+        "value": "default"
+      },
+      "cognitiveServiceName": {
+        "value": "dev-cog-ai-01"
+      },
+      "SQLServerName": {
+        "value": "dev-sql-ai-01"
+      },
+      "SQLDBName": {
+        "value": "dev-sql-db-ai-01"
+      },
+      "SQLAdministratorLogin": {
+        "value": "devsqlaaidmin"
+      },
+      "SQLAdministratorLoginPassword": {
+        "value": "devSQLadmin!"
+      },
+      "bingSearchAPIName": {
+        "value": "dev-bing-ai-01"
+      },
+      "cosmosDBAccountName": {
+        "value": "dev-cosmos-db-acc-ai-01"
+      },
+      "cosmosDBDatabaseName": {
+        "value": "dev-cosmos-db-ai-01"
+      },
+      "cosmosDBContainerName": {
+        "value": "dev-cosmos-ai-db-container-01"
+      },
+      "formRecognizerName": {
+        "value": "dev-form-ai-01"
+      },
+      "blobStorageAccountName": {
+        "value": "devstgai01"
+      },
+      "location": {
+        "value": "[resourceGroup().location]"
+      }
     }
-}
+  }

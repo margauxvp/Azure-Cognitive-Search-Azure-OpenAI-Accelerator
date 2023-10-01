@@ -69,6 +69,9 @@ param cosmosDBContainerName string = 'cosmosdb-container-${uniqueString(resource
 @description('Optional. The name of the Form Recognizer service')
 param formRecognizerName string = 'form-recognizer-${uniqueString(resourceGroup().id)}'
 
+@description('Optional. The name of the Form Recognizer service')
+param storageAccountName string = 'storage-${uniqueString(resourceGroup().id)}'
+
 @description('Optional, defaults to resource group location. The location of the resources.')
 param location string = resourceGroup().location
 
@@ -85,6 +88,15 @@ resource azureSearch 'Microsoft.Search/searchServices@2021-04-01-Preview' = {
     partitionCount: azureSearchPartitionCount
     hostingMode: azureSearchHostingMode
     semanticSearch: 'free'
+  }
+}
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
+  name: storageAccountName
+  location: location
+  kind: 'StorageV2'
+  sku: {
+    name: 'Standard_LRS'
   }
 }
 

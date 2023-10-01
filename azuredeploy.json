@@ -274,7 +274,7 @@
       ]
     },
     {
-      "type": "Microsoft.Bing/accounts",
+      "type": "Microsoft.BingSearch/bingServices",
       "apiVersion": "2020-06-10",
       "name": "[parameters('bingSearchAPIName')]",
       "kind": "Bing.Search.v7",
